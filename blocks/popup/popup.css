@@ -1,0 +1,159 @@
+/* Fondo del popup */
+.popup {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Cuando está abierto */
+.popup_opened {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Contenedor del popup EDIT PROFILE */
+.popup__container {
+  background-color: #fff;
+  width: 430px;
+  padding: 30px;
+  border-radius: 10px;
+  position: relative;
+}
+
+/* Contenedor del popup ADD CARD */
+.popup__content {
+  background-color: #fff;
+  width: 430px;
+  padding: 30px;
+  border-radius: 10px;
+  position: relative;
+}
+
+/* Botón cerrar (X) */
+.popup__close {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.popup__title {
+  font-family: "Inter", sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+.popup__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.popup__input {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 5px;
+  font-size: 14px;
+}
+
+.popup__submit,
+.popup__save-button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 14px 0;
+  font-size: 16px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+/* Estado hover */
+.popup__submit:hover {
+  background-color: #333; /* gris oscuro */
+  transition: background-color 0.2s ease;
+}
+
+/* Estado active (cuando se da click) */
+.popup__submit:active {
+  background-color: #555; /* un poquito más claro */
+}
+
+/* ----- POPUP DE IMAGEN GRANDE ----- */
+
+.popup_type_image .popup__image-container {
+  position: relative;
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.popup__image {
+  max-width: 75vw;
+  max-height: 75vh;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+.popup__caption {
+  color: white;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.popup_type_image .popup__close {
+  right: -35px;
+  top: -35px;
+}
+
+@media screen and (max-width: 480px) {
+  .popup__container,
+  .popup__content {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .popup__title {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .popup__input {
+    font-size: 14px;
+  }
+
+  .popup__submit,
+  .popup__save-button {
+    font-size: 14px;
+    padding: 12px 0;
+  }
+
+  .popup__close {
+    right: 0;
+    top: -40px;
+    font-size: 24px;
+  }
+
+  /* Imagen grande */
+  .popup_type_image .popup__image {
+    max-width: 90vw;
+    max-height: 70vh;
+  }
+
+  .popup__caption {
+    font-size: 12px;
+  }
+}
