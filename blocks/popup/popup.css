@@ -438,20 +438,20 @@
 /* Distancia título → primer campo = 54px
    (asumimos que .popup__title está inmediatamente antes de .popup__input en el DOM) */
 .popup_type_edit .popup__title + .popup__form,
-.popup_type_add-card .popup__title + .popup_form {
+.popup_type_add-card.popup__title + .popup__form {
   /* No hacemos nada aquí; las reglas siguientes afectan elementos individuales */
 }
 
 /* Primer input: margen-top desde el título */
 .popup_type_edit .popup__form .popup__input:first-of-type,
-.popup_type_add-card .popup_form .popup__input:first-of-type {
+.popup_type_add-card.popup__form .popup__input:first-of-type {
   margin-top: 54px; /* distancia EXACTA entre título y primer campo */
   margin-bottom: 29.74px; /* distancia hacia el siguiente campo (si existe) */
 }
 
 /* Inputs intermedios: separación entre sí = 29.74px */
 .popup_type_edit .popup__form .popup__input:not(:first-of-type),
-.popup_type_add-card .popup_form .popup__input:not(:first-of-type) {
+.popup_type_add-card .popup__form .popup__input:not(:first-of-type) {
   margin-top: 0; /* el interespacio lo controla el margin-bottom del anterior */
   margin-bottom: 29.74px; /* EXACTO */
 }
