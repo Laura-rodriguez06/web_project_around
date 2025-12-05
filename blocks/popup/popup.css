@@ -1,0 +1,588 @@
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.popup_opened {
+  display: flex;
+}
+
+.popup__container,
+.popup__content {
+  width: 430px;
+  min-height: 330px;
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.popup__title {
+  font-size: 24px;
+  font-weight: 900;
+  margin: 0 0 20px 0;
+  color: #000;
+}
+
+.popup__input {
+  width: 100%;
+  height: 40px;
+  background: #c4c4c4;
+  border: 1px solid #000;
+  border-radius: 2px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.popup__submit,
+.popup__save-button {
+  width: 100%;
+  height: 50px;
+  background: #000;
+  border: 1px solid #c4c4c4;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.popup__submit:hover,
+.popup__save-button:hover {
+  background: #333;
+}
+
+.popup__close {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.popup__close:hover {
+  background: #ccc;
+}
+
+/* Popup imagen */
+
+.popup_type_image {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.popup__image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+}
+
+.popup__image {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.popup__caption {
+  color: #fff;
+  margin-top: 10px;
+}
+
+/* Contenedor de la imagen */
+.popup_type_image .popup__image-container {
+  max-width: 600px;
+  max-height: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* X para cerrar — SOLO LA X */
+.popup_type_image .popup__close {
+  position: absolute;
+  top: -40px; /* según tu diseño */
+  right: -40px;
+  width: 40px;
+  height: 40px;
+
+  background: none; /* sin fondo */
+  border: none; /* sin bordes */
+  padding: 0;
+
+  font-size: 40px; /* grosor y tamaño de la X */
+  line-height: 40px;
+  color: white; /* para ser visible */
+
+  cursor: pointer;
+  transform: rotate(0deg); /* 🔥 X recta, NO inclinada */
+}
+
+/* hover suave */
+.popup_type_image .popup__close:hover {
+  opacity: 0.7;
+}
+
+/* =========================================
+   POPUP: EDITAR PERFIL
+   ========================================= */
+
+/* Overlay oscuro */
+.popup_type_edit {
+  position: fixed;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 5000;
+}
+
+.popup_type_edit.popup_opened {
+  display: flex;
+}
+
+/* Caja blanca principal (430x330 Figma) */
+.popup_type_edit .popup__container {
+  width: 430px;
+  height: 330px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  padding: 30px;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Botón X — SOLO LA X, sin círculo, en diagonal */
+.popup_type_edit .popup__close {
+  position: absolute;
+  top: -25px;
+  right: -25px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 40px;
+  line-height: 1;
+  transform: rotate(0deg);
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Título "Editar perfil" */
+.popup_type_edit .popup__title {
+  font-family: "Inter", sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1;
+  color: #000000;
+  margin: 0 0 20px 0;
+}
+
+/* Inputs */
+.popup_type_edit .popup__input {
+  width: 358px;
+  height: 28px;
+  background: #c4c4c4;
+  border: 1px solid #000000;
+  border-radius: 2px;
+  padding: 6px 10px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* Espacio entre inputs */
+.popup_type_edit .popup__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Botón Guardar */
+.popup_type_edit .popup__submit {
+  width: 358px;
+  height: 50px;
+  background: #000000;
+  border: 1px solid #c4c4c4;
+  border-radius: 2px;
+  color: #ffffff;
+  font-size: 18px;
+  font-family: "Inter", sans-serif;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.popup_type_edit .popup__submit:hover {
+  background: #333333;
+}
+
+/* =========================================
+   POPUP: AGREGAR TARJETA
+   ========================================= */
+
+/* Overlay */
+.popup_type_add-card {
+  position: fixed;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 5000;
+}
+
+.popup_type_add-card.popup_opened {
+  display: flex;
+}
+
+/* Caja blanca */
+.popup_type_add-card .popup__content {
+  width: 430px;
+  min-height: 330px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  padding: 30px;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* X */
+.popup_type_add-card .popup__close {
+  position: absolute;
+  top: -25px;
+  right: -25px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 40px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Título */
+.popup_type_add-card .popup__title {
+  font-family: "Inter", sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  margin: 0 0 20px 0;
+  color: #000000;
+}
+
+/* Inputs */
+.popup_type_add-card .popup__input {
+  width: 358px;
+  height: 28px;
+  background: #c4c4c4;
+  border: 1px solid #000000;
+  border-radius: 2px;
+  padding: 6px 10px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* Form */
+.popup_type_add-card .popup_form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Botón CREAR */
+.popup_type_add-card .popup__save-button {
+  width: 358px;
+  height: 50px;
+  background: #000000;
+  border: 1px solid #c4c4c4;
+  border-radius: 2px;
+  color: #ffffff;
+  font-size: 18px;
+  margin-top: 10px;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+}
+
+.popup_type_add-card .popup__save-button:hover {
+  background: #333333;
+}
+
+/* ===========================================
+   POPUP: EDITAR PERFIL  (y AGREGAR TARJETA)
+   Basado exactamente en las medidas que enviaste
+   =========================================== */
+
+/* overlay oscuro (mismo para ambos popups) */
+.popup_type_edit,
+.popup_type_add-card {
+  position: fixed;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 5000;
+}
+
+.popup_type_edit.popup_opened,
+.popup_type_add-card.popup_opened {
+  display: flex;
+}
+
+/* Contenedor blanco general (430 x 330) */
+.popup__container,
+.popup__content {
+  width: 430px;
+  height: 330px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15); /* #00000026 */
+  position: relative;
+  box-sizing: border-box;
+
+  /* Laterales exactos: 36px; espacio superior aproximado para que coincida con tus tops */
+  padding: 26px 36px 36.51px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Título (Editar perfil / Nueva tarjeta) */
+.popup__title {
+  width: 330px; /* según Figma */
+  font-family: "Inter", sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1;
+  color: #000000;
+  margin: 0;
+  /* separación para aproximar top:229 dentro del contenedor */
+  margin-bottom: 18px;
+}
+
+/* -------------------
+   Contenido: texto actual (Jacques Cousteau / Explorador)
+   Usamos reglas para que el texto quede con las medidas exactas
+   ------------------- */
+.popup__content-text,
+.popup__current-value {
+  width: 358px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 6px 8px;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+/* === OVERRIDES: inputs y espaciados exactos para POPUPS (EDIT / ADD) === */
+
+/* especificidad por si hay reglas anteriores */
+.popup_type_edit .popup__title,
+.popup_type_add-card .popup__title {
+  margin: 0;
+  /* dejamos el título en el lugar natural; el padding del contenedor controla la separación externa */
+}
+
+/* Forzar inputs SIN recuadro, solo línea inferior negra.
+   Usa background: transparent y sin border excepto border-bottom */
+.popup_type_edit .popup__input,
+.popup_type_add-card .popup__input {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid #000 !important; /* línea negra */
+  box-shadow: none !important;
+  width: 358px; /* ancho exacto */
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #000;
+  padding: 0 0 4px 0;
+  box-sizing: border-box;
+  outline: none;
+  display: block;
+}
+
+/* Contenedor del formulario: colocamos los gaps exactos que pediste.
+   NOTA: usamos margin-top/margin-bottom para distancias absolutas. */
+.popup_type_edit .popup__form,
+.popup_type_add-card .popup_form {
+  /* quitamos gap automático para controlar distancias exactas */
+  display: block;
+}
+
+/* Distancia título → primer campo = 54px
+   (asumimos que .popup__title está inmediatamente antes de .popup__input en el DOM) */
+.popup_type_edit .popup__title + .popup__form,
+.popup_type_add-card .popup__title + .popup_form {
+  /* No hacemos nada aquí; las reglas siguientes afectan elementos individuales */
+}
+
+/* Primer input: margen-top desde el título */
+.popup_type_edit .popup__form .popup__input:first-of-type,
+.popup_type_add-card .popup_form .popup__input:first-of-type {
+  margin-top: 54px; /* distancia EXACTA entre título y primer campo */
+  margin-bottom: 29.74px; /* distancia hacia el siguiente campo (si existe) */
+}
+
+/* Inputs intermedios: separación entre sí = 29.74px */
+.popup_type_edit .popup__form .popup__input:not(:first-of-type),
+.popup_type_add-card .popup_form .popup__input:not(:first-of-type) {
+  margin-top: 0; /* el interespacio lo controla el margin-bottom del anterior */
+  margin-bottom: 29.74px; /* EXACTO */
+}
+
+/* Distancia última input → botón = 48px.
+   Hacemos que el botón esté posicionado de forma estática y usamos margin-top para separar. */
+.popup_type_edit .popup__submit,
+.popup_type_add-card .popup__save-button {
+  display: block;
+  width: 358px;
+  height: 50px;
+  margin: 48px auto 0 auto;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* Si tu HTML usa .popup__submit dentro del form y no fuera, podemos aplicar padding interno:
+   aseguramos que el botón no se superponga al final del contenedor */
+.popup__container,
+.popup__content {
+  padding-left: 36px;
+  padding-right: 36px;
+  overflow: visible !important; /* PERMITE que la X sobresalga */
+  position: relative; /* NECESARIO para posicionar la X */
+  /* mantener padding-top y padding-bottom ya definidos en tu CSS original */
+}
+
+/* ==========================================
+   BOTÓN DE CERRAR (X) – popup EDIT y ADD
+   ========================================== */
+
+.popup__close {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  font-size: 32px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+
+  /* La sacamos MÁS afuera para que no se vea debajo del borde */
+  top: -35px;
+  right: -35px;
+}
+
+/* En caso de que los contenedores tapen la X */
+.popup__container,
+.popup__content {
+  position: relative;
+  overflow: visible !important;
+}
+
+/* -------------------
+   Responsive: asegurar que no desborde en pantallas pequeñas
+   ------------------- */
+@media screen and (max-width: 480px) {
+  .popup__container,
+  .popup__content {
+    width: calc(100% - 40px);
+    height: auto;
+    padding: 18px;
+  }
+
+  .popup__title {
+    font-size: 20px;
+    margin-bottom: 14px;
+  }
+
+  .popup_type_edit .popup__input,
+  .popup_type_add-card .popup__input {
+    width: 100%;
+    height: auto;
+  }
+
+  .popup_type_edit .popup__submit,
+  .popup_type_add-card .popup__save-button {
+    position: static;
+    width: 100%;
+    margin-top: 18px;
+    bottom: auto;
+    left: auto;
+  }
+
+  .popup_type_edit .popup__close,
+  .popup_type_add-card .popup__close {
+    top: -22px;
+    right: -22px;
+    font-size: 34px;
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Responsive popups */
+
+@media screen and (max-width: 500px) {
+  .popup__container,
+  .popup__content {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .popup__close {
+    top: -20px;
+    right: -20px;
+    width: 34px;
+    height: 34px;
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .popup_type_edit .popup__input,
+  .popup_type_add-card .popup__input {
+    width: 100%;
+    margin-top: 28px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .popup_type_edit .popup__submit,
+  .popup_type_add-card .popup__save-button {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 24px;
+  }
+}

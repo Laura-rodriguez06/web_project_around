@@ -1,0 +1,114 @@
+.profile {
+  max-width: 880px;
+  margin: 40px auto 0;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile__left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile__name-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile__name {
+  font-size: 42px;
+  font-weight: 500;
+  margin: 0;
+  color: #fff;
+}
+
+.profile__edit-button {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #fff;
+  background: transparent;
+  border-radius: 2px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.profile__edit-icon {
+  width: 10px;
+  height: 10px;
+}
+
+.profile__edit-button:hover {
+  border-color: #ccc;
+}
+
+.profile__about {
+  margin: 8px 0 0;
+  font-size: 18px;
+  color: #bfbfbf;
+}
+
+/* Botón agregar */
+
+.profile__add-button {
+  min-width: 150px;
+  height: 50px;
+  border: 2px solid #fff;
+  background: transparent;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.profile__add-icon {
+  font-size: 22px;
+  color: #fff;
+}
+
+.profile__add-button:hover {
+  border-color: #ccc;
+}
+
+.profile__add-button:hover .profile__add-icon {
+  color: #ccc;
+}
+
+@media screen and (max-width: 768px) {
+  .profile {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .profile__info {
+    align-items: center;
+  }
+
+  .profile__name {
+    font-size: 28px;
+  }
+
+  .profile__add-button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
