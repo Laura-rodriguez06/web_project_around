@@ -586,3 +586,53 @@
     margin-top: 24px;
   }
 }
+
+/* =========================
+   VALIDACIÓN (LO QUE FALTA)
+   ========================= */
+
+/* input en error */
+.popup__input_type_error {
+  border-bottom: 2px solid red !important;
+}
+
+/* mensaje de error */
+.popup__error {
+  color: red;
+  font-size: 12px;
+  line-height: 14px;
+  min-height: 14px;
+  margin-top: 4px;
+  display: block;
+  visibility: hidden; /* oculto por defecto */
+}
+
+/* cuando se muestra */
+.popup__error_visible {
+  visibility: visible;
+}
+
+/* botón desactivado */
+.popup__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* =========================
+   FIX TITULOS POPUP
+   ========================= */
+
+.popup__title {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #000 !important;
+  font-size: 24px !important;
+  font-weight: 900 !important;
+  margin-bottom: 20px !important;
+}
+.popup__content,
+.popup__container {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}

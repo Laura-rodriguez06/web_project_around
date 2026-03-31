@@ -1,166 +1,172 @@
-const editButton = document.querySelector(".profile__edit-button");
+// ----------------------------------------
+// VALIDACIÓN
+// ----------------------------------------
+
+function showInputError(input) {
+  const error = input.nextElementSibling;
+  input.classList.add("popup__input_type_error");
+  error.textContent = input.validationMessage;
+  error.classList.add("popup__error_visible");
+}
+
+function hideInputError(input) {
+  const error = input.nextElementSibling;
+  input.classList.remove("popup__input_type_error");
+  error.textContent = "";
+  error.classList.remove("popup__error_visible");
+}
+
+function checkInputValidity(input) {
+  input.validity.valid ? hideInputError(input) : showInputError(input);
+}
+
+function toggleButtonState(inputs, button) {
+  button.disabled = inputs.some((i) => !i.validity.valid);
+}
+
+function setEventListeners(form) {
+  const inputs = Array.from(form.querySelectorAll(".popup__input"));
+  const button = form.querySelector(".popup__submit");
+
+  toggleButtonState(inputs, button);
+
+  inputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      checkInputValidity(input);
+      toggleButtonState(inputs, button);
+    });
+  });
+}
+
+document.querySelectorAll(".popup__form").forEach(setEventListeners);
+
+// ----------------------------------------
+// DATOS
+// ----------------------------------------
+
+const initialCards = [
+  { name: "Valle Yosemite", link: "./images/Valleyosemite.jpg" },
+  { name: "Lago Louise", link: "./images/LagoLouise.jpg" },
+  { name: "Montañas Calvas", link: "./images/MontañasCalvas.png" },
+  { name: "Latemar", link: "./images/Latemar.png" },
+  { name: "Vanois National", link: "./images/Vanois.png" },
+  { name: "Lago di Braies", link: "./images/Lagodi.png" },
+];
+
+// ----------------------------------------
+// POPUPS
+// ----------------------------------------
+
+function openPopup(p) {
+  p.classList.add("popup_opened");
+}
+
+function closePopup(p) {
+  p.classList.remove("popup_opened");
+}
+
+// ----------------------------------------
+// TARJETAS CON TEMPLATE
+// ----------------------------------------
+
+const template = document.querySelector("#card-template").content;
+const list = document.querySelector(".cards__list");
+
+function createCard(name, link) {
+  const card = template.querySelector(".cards__item").cloneNode(true);
+
+  const img = card.querySelector(".cards__image");
+  const title = card.querySelector(".cards__title");
+
+  img.src = link;
+  img.alt = name;
+  title.textContent = name;
+
+  return card;
+}
+
+initialCards.forEach((c) => list.append(createCard(c.name, c.link)));
+
+// ----------------------------------------
+// ELIMINAR TARJETA
+// ----------------------------------------
+
+document.addEventListener("click", (e) => {
+  const del = e.target.closest(".cards__delete-button");
+  if (del) del.closest(".cards__item").remove();
+});
+
+// ----------------------------------------
+// PERFIL
+// ----------------------------------------
 
 const popupEdit = document.querySelector(".popup_type_edit");
 
-const popupEditForm = popupEdit.querySelector(".popup__form");
+document.querySelector(".profile__edit-button").onclick = () => {
+  const name = document.querySelector(".profile__name");
+  const about = document.querySelector(".profile__about");
 
-const profileName = document.querySelector(".profile__name");
+  popupEdit.querySelector("[name='name']").value = name.textContent;
+  popupEdit.querySelector("[name='about']").value = about.textContent;
 
-const profileAbout = document.querySelector(".profile__about");
+  openPopup(popupEdit);
+};
 
-const nameInput = popupEdit.querySelector("input[name='name']");
-
-const aboutInput = popupEdit.querySelector("input[name='about']");
-
-// Abrir popup editar perfil
-
-editButton.addEventListener("click", () => {
-  nameInput.value = profileName.textContent;
-
-  aboutInput.value = profileAbout.textContent;
-
-  popupEdit.classList.add("popup_opened");
-});
-
-// Guardar cambios
-
-popupEditForm.addEventListener("submit", (e) => {
+popupEdit.querySelector("form").onsubmit = (e) => {
   e.preventDefault();
 
-  profileName.textContent = nameInput.value;
+  document.querySelector(".profile__name").textContent =
+    popupEdit.querySelector("[name='name']").value;
 
-  profileAbout.textContent = aboutInput.value;
+  document.querySelector(".profile__about").textContent =
+    popupEdit.querySelector("[name='about']").value;
 
-  popupEdit.classList.remove("popup_opened");
-});
-
-// ----------------------------------------
-
-// POPUP AGREGAR TARJETA
+  closePopup(popupEdit);
+};
 
 // ----------------------------------------
-
-const addButton = document.querySelector(".profile__add-button");
+// AGREGAR TARJETA
+// ----------------------------------------
 
 const popupAdd = document.querySelector(".popup_type_add-card");
 
-const addForm = popupAdd.querySelector(".popup__form_type_add-card");
+document.querySelector(".profile__add-button").onclick = () =>
+  openPopup(popupAdd);
 
-const titleInput = addForm.querySelector("input[name='title']");
-
-const imageInput = addForm.querySelector("input[name='image']");
-
-addButton.addEventListener("click", () => {
-  popupAdd.classList.add("popup_opened");
-});
-
-// Crear tarjeta
-
-addForm.addEventListener("submit", (e) => {
+popupAdd.querySelector("form").onsubmit = (e) => {
   e.preventDefault();
 
-  const newCard = document.createElement("li");
+  const title = popupAdd.querySelector("[name='title']").value;
+  const link = popupAdd.querySelector("[name='image']").value;
 
-  newCard.classList.add("cards__item");
+  list.prepend(createCard(title, link));
 
-  newCard.innerHTML = `
-
-    <img src="${imageInput.value}" alt="${titleInput.value}" class="cards__image" />
-
-
-
-    <div class="cards__title-group">
-
-      <h2 class="cards__title">${titleInput.value}</h2>
-
-      <button class="cards__like-button">
-
-        <img src="./images/coradesactivado.svg" class="cards__like-icon" data-active="false" />
-
-      </button>
-
-    </div>
-
-  `;
-
-  document.querySelector(".cards__list").prepend(newCard);
-
-  popupAdd.classList.remove("popup_opened");
-
-  addForm.reset();
-});
-
-// ----------------------------------------
-
-// CERRAR POPUPS
-
-// ----------------------------------------
-
-document.querySelectorAll(".popup__close").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    btn.closest(".popup").classList.remove("popup_opened");
-  });
-});
-
-// ----------------------------------------
-
-// LIKE (3 ESTADOS)
-
-// ----------------------------------------
-
-const LIKE_ICONS = {
-  inactive: "./images/coradesactivado.svg",
-
-  hover: "./images/coragris.svg",
-
-  active: "./images/union.svg",
+  e.target.reset();
+  closePopup(popupAdd);
 };
 
-document.addEventListener("click", (e) => {
-  const btn = e.target.closest(".cards__like-button");
-
-  if (!btn) return;
-
-  const icon = btn.querySelector(".cards__like-icon");
-
-  const active = icon.dataset.active === "true";
-
-  icon.dataset.active = (!active).toString();
-
-  icon.src = active ? LIKE_ICONS.inactive : LIKE_ICONS.active;
-});
-
-document.addEventListener("mouseover", (e) => {
-  const icon = e.target.closest(".cards__like-icon");
-
-  if (!icon) return;
-
-  if (icon.dataset.active === "false") icon.src = LIKE_ICONS.hover;
-});
-
-document.addEventListener("mouseout", (e) => {
-  const icon = e.target.closest(".cards__like-icon");
-
-  if (!icon) return;
-
-  if (icon.dataset.active === "false") icon.src = LIKE_ICONS.inactive;
-});
-
+// ----------------------------------------
+// CERRAR POPUPS
 // ----------------------------------------
 
-// POPUP IMAGEN GRANDE
+document
+  .querySelectorAll(".popup__close")
+  .forEach((btn) => (btn.onclick = () => closePopup(btn.closest(".popup"))));
 
+document.addEventListener("click", (e) => {
+  const likeBtn = e.target.closest(".cards__like-button");
+
+  if (!likeBtn) return;
+
+  likeBtn.classList.toggle("cards__like-button_active");
+});
+// ----------------------------------------
+// POPUP IMAGEN GRANDE
 // ----------------------------------------
 
 const imagePopup = document.querySelector(".popup_type_image");
-
 const popupImage = imagePopup.querySelector(".popup__image");
-
 const popupCaption = imagePopup.querySelector(".popup__caption");
-
-const popupImageClose = imagePopup.querySelector(".popup__close");
-
-// Abrir imagen
 
 document.addEventListener("click", (e) => {
   const img = e.target.closest(".cards__image");
@@ -168,28 +174,25 @@ document.addEventListener("click", (e) => {
   if (!img) return;
 
   const card = img.closest(".cards__item");
-
   const title = card.querySelector(".cards__title").textContent;
 
   popupImage.src = img.src;
-
   popupImage.alt = title;
-
   popupCaption.textContent = title;
 
   imagePopup.classList.add("popup_opened");
 });
-
-// Cerrar con X
-
-popupImageClose.addEventListener("click", () => {
-  imagePopup.classList.remove("popup_opened");
-});
-
-// Cerrar al hacer clic fuera
-
+// cerrar haciendo click fuera
 imagePopup.addEventListener("click", (e) => {
   if (e.target === imagePopup) {
     imagePopup.classList.remove("popup_opened");
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened");
+    if (openedPopup) {
+      openedPopup.classList.remove("popup_opened");
+    }
   }
 });

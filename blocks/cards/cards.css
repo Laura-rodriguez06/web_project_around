@@ -79,3 +79,16 @@
     font-size: 20px;
   }
 }
+/* =========================
+   LIKE (ME GUSTA)
+   ========================= */
+
+.cards__like-button {
+  opacity: 0.5;
+  transition: 0.3s;
+}
+
+.cards__like-button_active {
+  opacity: 1;
+  transform: scale(1.2);
+}
