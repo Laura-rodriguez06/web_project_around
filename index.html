@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -73,7 +73,7 @@
     </template>
 
     <!-- EDITAR PERFIL -->
-    <div class="popup popup_type_edit">
+    <div class="popup popup_type_edit" id="edit-popup">
       <div class="popup__container">
         <button class="popup__close">✕</button>
 
@@ -81,7 +81,7 @@
           <input
             type="text"
             name="name"
-            class="popup__input"
+            class="popup__input popup__input_type_name"
             required
             minlength="2"
             maxlength="40"
@@ -91,7 +91,7 @@
           <input
             type="text"
             name="about"
-            class="popup__input"
+            class="popup__input popup__input_type_description"
             required
             minlength="2"
             maxlength="200"
@@ -135,6 +135,7 @@
         <p class="popup__caption"></p>
       </div>
     </div>
+
     <script src="./scripts/index.js"></script>
   </body>
 </html>

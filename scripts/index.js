@@ -58,15 +58,15 @@ const initialCards = [
 // ----------------------------------------
 
 function openPopup(p) {
-  p.classList.add("popup_opened");
+  p.classList.add("popup_is-opened");
 }
 
 function closePopup(p) {
-  p.classList.remove("popup_opened");
+  p.classList.remove("popup_is-opened");
 }
 
 // ----------------------------------------
-// TARJETAS CON TEMPLATE
+// TARJETAS
 // ----------------------------------------
 
 const template = document.querySelector("#card-template").content;
@@ -88,41 +88,45 @@ function createCard(name, link) {
 initialCards.forEach((c) => list.append(createCard(c.name, c.link)));
 
 // ----------------------------------------
-// ELIMINAR TARJETA
+// PERFIL (ETAPA 2 CORRECTA)
 // ----------------------------------------
 
-document.addEventListener("click", (e) => {
-  const del = e.target.closest(".cards__delete-button");
-  if (del) del.closest(".cards__item").remove();
-});
+const editButton = document.querySelector(".profile__edit-button");
+const editModal = document.querySelector("#edit-popup");
+const closeButton = editModal.querySelector(".popup__close");
 
-// ----------------------------------------
-// PERFIL
-// ----------------------------------------
+const profileName = document.querySelector(".profile__name");
+const profileAbout = document.querySelector(".profile__about");
 
-const popupEdit = document.querySelector(".popup_type_edit");
+const nameInput = editModal.querySelector(".popup__input_type_name");
+const aboutInput = editModal.querySelector(".popup__input_type_description");
 
-document.querySelector(".profile__edit-button").onclick = () => {
-  const name = document.querySelector(".profile__name");
-  const about = document.querySelector(".profile__about");
+const formElement = editModal.querySelector(".popup__form");
 
-  popupEdit.querySelector("[name='name']").value = name.textContent;
-  popupEdit.querySelector("[name='about']").value = about.textContent;
+function fillProfileForm() {
+  nameInput.value = profileName.textContent;
+  aboutInput.value = profileAbout.textContent;
+}
 
-  openPopup(popupEdit);
-};
+function handleOpenEditModal() {
+  fillProfileForm();
+  openPopup(editModal);
+}
 
-popupEdit.querySelector("form").onsubmit = (e) => {
-  e.preventDefault();
+function handleProfileFormSubmit(evt) {
+  evt.preventDefault();
 
-  document.querySelector(".profile__name").textContent =
-    popupEdit.querySelector("[name='name']").value;
+  profileName.textContent = nameInput.value;
+  profileAbout.textContent = aboutInput.value;
 
-  document.querySelector(".profile__about").textContent =
-    popupEdit.querySelector("[name='about']").value;
+  closePopup(editModal);
+}
 
-  closePopup(popupEdit);
-};
+editButton.addEventListener("click", handleOpenEditModal);
+
+closeButton.addEventListener("click", () => closePopup(editModal));
+
+formElement.addEventListener("submit", handleProfileFormSubmit);
 
 // ----------------------------------------
 // AGREGAR TARJETA
@@ -130,10 +134,11 @@ popupEdit.querySelector("form").onsubmit = (e) => {
 
 const popupAdd = document.querySelector(".popup_type_add-card");
 
-document.querySelector(".profile__add-button").onclick = () =>
-  openPopup(popupAdd);
+document
+  .querySelector(".profile__add-button")
+  .addEventListener("click", () => openPopup(popupAdd));
 
-popupAdd.querySelector("form").onsubmit = (e) => {
+popupAdd.querySelector("form").addEventListener("submit", (e) => {
   e.preventDefault();
 
   const title = popupAdd.querySelector("[name='title']").value;
@@ -143,7 +148,7 @@ popupAdd.querySelector("form").onsubmit = (e) => {
 
   e.target.reset();
   closePopup(popupAdd);
-};
+});
 
 // ----------------------------------------
 // CERRAR POPUPS
@@ -151,17 +156,22 @@ popupAdd.querySelector("form").onsubmit = (e) => {
 
 document
   .querySelectorAll(".popup__close")
-  .forEach((btn) => (btn.onclick = () => closePopup(btn.closest(".popup"))));
+  .forEach((btn) =>
+    btn.addEventListener("click", () => closePopup(btn.closest(".popup"))),
+  );
+
+// ----------------------------------------
+// LIKE
+// ----------------------------------------
 
 document.addEventListener("click", (e) => {
   const likeBtn = e.target.closest(".cards__like-button");
-
   if (!likeBtn) return;
-
   likeBtn.classList.toggle("cards__like-button_active");
 });
+
 // ----------------------------------------
-// POPUP IMAGEN GRANDE
+// POPUP IMAGEN
 // ----------------------------------------
 
 const imagePopup = document.querySelector(".popup_type_image");
@@ -170,7 +180,6 @@ const popupCaption = imagePopup.querySelector(".popup__caption");
 
 document.addEventListener("click", (e) => {
   const img = e.target.closest(".cards__image");
-
   if (!img) return;
 
   const card = img.closest(".cards__item");
@@ -180,19 +189,18 @@ document.addEventListener("click", (e) => {
   popupImage.alt = title;
   popupCaption.textContent = title;
 
-  imagePopup.classList.add("popup_opened");
+  openPopup(imagePopup);
 });
-// cerrar haciendo click fuera
+
+// cerrar con overlay
 imagePopup.addEventListener("click", (e) => {
-  if (e.target === imagePopup) {
-    imagePopup.classList.remove("popup_opened");
-  }
+  if (e.target === imagePopup) closePopup(imagePopup);
 });
+
+// cerrar con ESC
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
-    const openedPopup = document.querySelector(".popup_opened");
-    if (openedPopup) {
-      openedPopup.classList.remove("popup_opened");
-    }
+    const openedPopup = document.querySelector(".popup_is-opened");
+    if (openedPopup) closePopup(openedPopup);
   }
 });
