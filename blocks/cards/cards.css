@@ -41,8 +41,6 @@
   font-weight: 900;
   margin: 0;
   color: #000;
-
-  /* Evita que salte de línea */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -52,11 +50,18 @@
   background: transparent;
   border: none;
   cursor: pointer;
+  opacity: 0.5;
+  transition: 0.3s;
 }
 
 .cards__like-icon {
   width: 22px;
   height: 22px;
+}
+
+.cards__like-button_active {
+  opacity: 1;
+  transform: scale(1.2);
 }
 
 /* Responsive */
@@ -75,20 +80,7 @@
     height: 220px;
   }
 
-  .card__title {
+  .cards__title {
     font-size: 20px;
   }
-}
-/* =========================
-   LIKE (ME GUSTA)
-   ========================= */
-
-.cards__like-button {
-  opacity: 0.5;
-  transition: 0.3s;
-}
-
-.cards__like-button_active {
-  opacity: 1;
-  transform: scale(1.2);
 }
