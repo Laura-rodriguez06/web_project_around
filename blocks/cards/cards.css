@@ -1,7 +1,7 @@
 .cards {
   max-width: 880px;
-  margin: 50px auto;
-  padding: 0 20px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
 .cards__list {
@@ -25,7 +25,6 @@
   width: 100%;
   height: 282px;
   object-fit: cover;
-  cursor: pointer;
 }
 
 .cards__title-group {
@@ -59,9 +58,14 @@
   height: 22px;
 }
 
+/* ESTADO ACTIVO DEL LIKE */
 .cards__like-button_active {
   opacity: 1;
   transform: scale(1.2);
+}
+.cards__like-button_active .cards__like-icon {
+  filter: brightness(0) saturate(100%) invert(24%) sepia(97%) saturate(7492%)
+    hue-rotate(356deg) brightness(98%) contrast(119%);
 }
 
 /* Responsive */

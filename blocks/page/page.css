@@ -1,11 +1,22 @@
 .page {
   font-family: "Inter", Arial, sans-serif;
+  overflow-x: hidden;
   background-color: #000;
   color: #fff;
   margin: 0;
   padding: 0;
 }
+* {
+  box-sizing: border-box;
+}
 
+/* IMÁGENES RESPONSIVE */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* CENTRADO EN PANTALLAS GRANDES */
 @media (min-width: 1280px) {
   .page {
     padding-left: calc((100vw - 880px) / 2);

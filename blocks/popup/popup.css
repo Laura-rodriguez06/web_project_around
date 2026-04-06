@@ -19,7 +19,8 @@
 /* CONTENEDOR */
 .popup__container,
 .popup__content {
-  width: 430px;
+  width: 100%;
+  max-width: 430px;
   background: #fff;
   padding: 30px;
   border-radius: 10px;
