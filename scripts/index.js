@@ -29,18 +29,39 @@ const popupAdd = document.querySelector(".popup_type_add-card");
 // FUNCIONES POPUP
 // ----------------------------------------
 
+function handleEscClose(evt) {
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_is-opened");
+
+    if (openedPopup) {
+      closePopup(openedPopup);
+    }
+  }
+}
+
 function openPopup(popup) {
   popup.classList.add("popup_is-opened");
+  document.addEventListener("keydown", handleEscClose);
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_is-opened");
+  document.removeEventListener("keydown", handleEscClose);
 }
 
 // cerrar con X
-document.querySelectorAll(".popup__close").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    closePopup(btn.closest(".popup"));
+document.querySelectorAll(".popup__close").forEach((button) => {
+  button.addEventListener("click", () => {
+    closePopup(button.closest(".popup"));
+  });
+});
+
+// cerrar con overlay
+document.querySelectorAll(".popup").forEach((popup) => {
+  popup.addEventListener("mousedown", (evt) => {
+    if (evt.target === popup) {
+      closePopup(popup);
+    }
   });
 });
 
@@ -48,33 +69,31 @@ document.querySelectorAll(".popup__close").forEach((btn) => {
 // TARJETAS
 // ----------------------------------------
 
-function getCardElement(
-  name = "Sin título",
-  link = "./images/placeholder.jpg",
-) {
+function getCardElement(name, link) {
   const card = template.querySelector(".cards__item").cloneNode(true);
 
-  const img = card.querySelector(".cards__image");
-  const title = card.querySelector(".cards__title");
-  const likeBtn = card.querySelector(".cards__like-button");
-  const deleteBtn = card.querySelector(".cards__delete-button");
+  const imageElement = card.querySelector(".cards__image");
+  const titleElement = card.querySelector(".cards__title");
+  const likeButton = card.querySelector(".cards__like-button");
+  const deleteButton = card.querySelector(".cards__delete-button");
 
-  title.textContent = name;
-  img.src = link;
-  img.alt = name;
+  titleElement.textContent = name;
+  imageElement.src = link;
+  imageElement.alt = name;
 
-  likeBtn.addEventListener("click", () => {
-    likeBtn.classList.toggle("cards__like-button_active");
+  likeButton.addEventListener("click", () => {
+    likeButton.classList.toggle("cards__like-button_active");
   });
 
-  deleteBtn.addEventListener("click", () => {
+  deleteButton.addEventListener("click", () => {
     card.remove();
   });
 
-  img.addEventListener("click", () => {
+  imageElement.addEventListener("click", () => {
     popupImage.src = link;
     popupImage.alt = name;
     popupCaption.textContent = name;
+
     openPopup(imagePopup);
   });
 
@@ -82,11 +101,14 @@ function getCardElement(
 }
 
 function renderCard(name, link, container) {
-  const card = getCardElement(name, link);
-  container.prepend(card);
+  const cardElement = getCardElement(name, link);
+  container.prepend(cardElement);
 }
 
-// tarjetas iniciales
+// ----------------------------------------
+// TARJETAS INICIALES
+// ----------------------------------------
+
 initialCards.forEach((item) => {
   renderCard(item.name, item.link, list);
 });
@@ -101,16 +123,18 @@ document
   .querySelector(".profile__edit-button")
   .addEventListener("click", () => {
     editForm.name.value = document.querySelector(".profile__name").textContent;
+
     editForm.about.value =
       document.querySelector(".profile__about").textContent;
 
     openPopup(popupEdit);
   });
 
-editForm.addEventListener("submit", (e) => {
-  e.preventDefault();
+editForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
 
   document.querySelector(".profile__name").textContent = editForm.name.value;
+
   document.querySelector(".profile__about").textContent = editForm.about.value;
 
   closePopup(popupEdit);
@@ -126,8 +150,8 @@ document.querySelector(".profile__add-button").addEventListener("click", () => {
   openPopup(popupAdd);
 });
 
-addForm.addEventListener("submit", (e) => {
-  e.preventDefault();
+addForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
 
   const title = addForm.title.value;
   const link = addForm.image.value;
@@ -135,5 +159,6 @@ addForm.addEventListener("submit", (e) => {
   renderCard(title, link, list);
 
   addForm.reset();
+
   closePopup(popupAdd);
 });
