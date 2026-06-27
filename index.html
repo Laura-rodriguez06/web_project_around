@@ -17,21 +17,29 @@
 
   <body class="page">
     <header class="header">
-      <img src="./images/ttitulo.svg" class="header__logo" alt="Logo" />
+      <img
+        src="./images/ttitulo.svg"
+        class="header__logo"
+        alt="Logo Around The U.S."
+      />
       <div class="header__line"></div>
     </header>
 
     <main class="content">
       <section class="profile">
         <div class="profile__left">
-          <img src="./images/Avatar.jpg" class="profile__avatar" alt="Avatar" />
+          <img
+            src="./images/Avatar.jpg"
+            class="profile__avatar"
+            alt="Avatar de Jacques Cousteau"
+          />
 
           <div class="profile__info">
             <div class="profile__name-row">
               <h2 class="profile__name">Jacques Cousteau</h2>
 
               <button class="profile__edit-button" type="button">
-                <img src="./images/lapiz.svg" alt="Editar" />
+                <img src="./images/lapiz.svg" alt="Editar perfil" />
               </button>
             </div>
 
@@ -52,20 +60,21 @@
     </footer>
 
     <!-- TEMPLATE -->
+
     <template id="card-template">
       <li class="cards__item">
-        <button class="cards__delete-button">🗑</button>
+        <button class="cards__delete-button" type="button">🗑</button>
 
         <img class="cards__image" src="" alt="" />
 
         <div class="cards__title-group">
           <h2 class="cards__title"></h2>
 
-          <button class="cards__like-button">
+          <button class="cards__like-button" type="button">
             <img
               src="./images/coradesactivado.svg"
               class="cards__like-icon"
-              alt="Like"
+              alt="Me gusta"
             />
           </button>
         </div>
@@ -73,15 +82,19 @@
     </template>
 
     <!-- EDITAR PERFIL -->
+
     <div class="popup popup_type_edit">
       <div class="popup__container">
-        <button class="popup__close">✕</button>
+        <button class="popup__close" type="button">✕</button>
 
-        <form class="popup__form">
+        <h2 class="popup__title">Editar perfil</h2>
+
+        <form class="popup__form" novalidate>
           <input
             type="text"
             name="name"
             class="popup__input"
+            placeholder="Nombre"
             minlength="2"
             maxlength="40"
             required
@@ -92,6 +105,7 @@
             type="text"
             name="about"
             class="popup__input"
+            placeholder="Acerca de mí"
             minlength="2"
             maxlength="200"
             required
@@ -103,23 +117,33 @@
       </div>
     </div>
 
-    <!-- AGREGAR TARJETA -->
-    <div class="popup popup_type_add-card">
-      <div class="popup__content">
-        <button class="popup__close">✕</button>
+    <!-- NUEVO LUGAR -->
 
-        <form class="popup__form">
+    <div class="popup popup_type_add-card">
+      <div class="popup__container">
+        <button class="popup__close" type="button">✕</button>
+
+        <h2 class="popup__title">Nuevo lugar</h2>
+
+        <form class="popup__form" novalidate>
           <input
             type="text"
             name="title"
             class="popup__input"
+            placeholder="Título"
             minlength="2"
             maxlength="30"
             required
           />
           <span class="popup__error"></span>
 
-          <input type="url" name="image" class="popup__input" required />
+          <input
+            type="url"
+            name="image"
+            class="popup__input"
+            placeholder="Enlace de la imagen"
+            required
+          />
           <span class="popup__error"></span>
 
           <button type="submit" class="popup__submit">Crear</button>
@@ -128,10 +152,13 @@
     </div>
 
     <!-- IMAGEN -->
+
     <div class="popup popup_type_image">
       <div class="popup__image-container">
-        <button class="popup__close">✕</button>
+        <button class="popup__close" type="button">✕</button>
+
         <img class="popup__image" src="" alt="" />
+
         <p class="popup__caption"></p>
       </div>
     </div>
