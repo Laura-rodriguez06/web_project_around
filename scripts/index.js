@@ -1,6 +1,9 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
-import { openPopup, closePopup } from "./utils.js";
+import Section from "./Section.js";
+import PopupWithImage from "./PopupWithImage.js";
+import PopupWithForm from "./PopupWithForm.js";
+import UserInfo from "./UserInfo.js";
 
 // ----------------------------------------
 // DATOS
@@ -32,58 +35,35 @@ const validationConfig = {
 // SELECTORES
 // ----------------------------------------
 
-const cardsContainer = document.querySelector(".cards__list");
+const editButton = document.querySelector(".profile__edit-button");
+const addButton = document.querySelector(".profile__add-button");
 
-const imagePopup = document.querySelector(".popup_type_image");
-const popupImage = imagePopup.querySelector(".popup__image");
-const popupCaption = imagePopup.querySelector(".popup__caption");
-
-const popupEdit = document.querySelector(".popup_type_edit");
-const popupAdd = document.querySelector(".popup_type_add-card");
-
-const editForm = popupEdit.querySelector(".popup__form");
-const addForm = popupAdd.querySelector(".popup__form");
+const editForm = document.querySelector(".popup_type_edit .popup__form");
+const addForm = document.querySelector(".popup_type_add-card .popup__form");
 
 // ----------------------------------------
-// VALIDACIÓN
+// USER INFO
 // ----------------------------------------
 
-const editFormValidator = new FormValidator(validationConfig, editForm);
-
-const addFormValidator = new FormValidator(validationConfig, addForm);
-
-editFormValidator.setEventListeners();
-addFormValidator.setEventListeners();
-
-// ----------------------------------------
-// POPUPS
-// ----------------------------------------
-
-document.querySelectorAll(".popup__close").forEach((button) => {
-  button.addEventListener("click", () => {
-    closePopup(button.closest(".popup"));
-  });
-});
-
-document.querySelectorAll(".popup").forEach((popup) => {
-  popup.addEventListener("mousedown", (evt) => {
-    if (evt.target === popup) {
-      closePopup(popup);
-    }
-  });
+const userInfo = new UserInfo({
+  nameSelector: ".profile__name",
+  aboutSelector: ".profile__about",
 });
 
 // ----------------------------------------
-// TARJETAS
+// POPUP DE IMAGEN
 // ----------------------------------------
+
+const popupWithImage = new PopupWithImage(".popup_type_image");
+popupWithImage.setEventListeners();
 
 function handleCardClick(name, link) {
-  popupImage.src = link;
-  popupImage.alt = name;
-  popupCaption.textContent = name;
-
-  openPopup(imagePopup);
+  popupWithImage.open(name, link);
 }
+
+// ----------------------------------------
+// TARJETAS / SECTION
+// ----------------------------------------
 
 function createCard(data) {
   const card = new Card(data, "#card-template", handleCardClick);
@@ -91,54 +71,70 @@ function createCard(data) {
   return card.generateCard();
 }
 
-initialCards.forEach((item) => {
-  cardsContainer.prepend(createCard(item));
+const cardsSection = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
+      cardsSection.addItem(createCard(item));
+    },
+  },
+  ".cards__list",
+);
+
+cardsSection.renderItems();
+
+// ----------------------------------------
+// POPUP EDITAR PERFIL
+// ----------------------------------------
+
+const editFormValidator = new FormValidator(validationConfig, editForm);
+editFormValidator.setEventListeners();
+
+const popupEditProfile = new PopupWithForm(
+  ".popup_type_edit",
+  (inputValues) => {
+    userInfo.setUserInfo({ name: inputValues.name, about: inputValues.about });
+    popupEditProfile.close();
+  },
+);
+popupEditProfile.setEventListeners();
+
+editButton.addEventListener("click", () => {
+  const currentUserInfo = userInfo.getUserInfo();
+
+  editForm.name.value = currentUserInfo.name;
+  editForm.about.value = currentUserInfo.about;
+
+  editFormValidator.resetValidation();
+
+  popupEditProfile.open();
 });
 
 // ----------------------------------------
-// EDITAR PERFIL
+// POPUP AGREGAR TARJETA
 // ----------------------------------------
 
-document
-  .querySelector(".profile__edit-button")
-  .addEventListener("click", () => {
-    editForm.name.value = document.querySelector(".profile__name").textContent;
+const addFormValidator = new FormValidator(validationConfig, addForm);
+addFormValidator.setEventListeners();
 
-    editForm.about.value =
-      document.querySelector(".profile__about").textContent;
+const popupAddCard = new PopupWithForm(
+  ".popup_type_add-card",
+  (inputValues) => {
+    const cardData = {
+      name: inputValues.title,
+      link: inputValues.image,
+    };
 
-    openPopup(popupEdit);
-  });
+    cardsSection.addItem(createCard(cardData));
 
-editForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
+    popupAddCard.close();
+  },
+);
+popupAddCard.setEventListeners();
 
-  document.querySelector(".profile__name").textContent = editForm.name.value;
-
-  document.querySelector(".profile__about").textContent = editForm.about.value;
-
-  closePopup(popupEdit);
-});
-
-// ----------------------------------------
-// AGREGAR TARJETA
-// ----------------------------------------
-
-document.querySelector(".profile__add-button").addEventListener("click", () => {
-  openPopup(popupAdd);
-});
-
-addForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-
-  const cardData = {
-    name: addForm.title.value,
-    link: addForm.image.value,
-  };
-
-  cardsContainer.prepend(createCard(cardData));
-
+addButton.addEventListener("click", () => {
   addForm.reset();
+  addFormValidator.resetValidation();
 
-  closePopup(popupAdd);
+  popupAddCard.open();
 });
